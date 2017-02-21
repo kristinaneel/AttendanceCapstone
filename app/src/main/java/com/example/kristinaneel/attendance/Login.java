@@ -41,7 +41,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    List<User> userList= new JsonReader(Login.this).getPersonList();
+                    List<User> userList= new UserJsonReader(Login.this).getUserList();
                     Log.v("userList", userList.toString());
 
                     user = (TextView) findViewById(R.id.userNameText);
