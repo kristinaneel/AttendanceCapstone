@@ -4,7 +4,6 @@ package com.example.kristinaneel.attendance;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         String appVersion = "v1";
 
 
-        Backendless.initApp("86BF87A5-8A92-A47F-FFD0-03212EB68600", "8D40F752-F203-3D0B-FF44-D02A66776400", appVersion);
+        Backendless.initApp(this, "86BF87A5-8A92-A47F-FFD0-03212EB68600", "8D40F752-F203-3D0B-FF44-D02A66776400", appVersion);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
