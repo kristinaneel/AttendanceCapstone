@@ -1,22 +1,22 @@
 package com.example.kristinaneel.attendance;
 
 
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.JsonReader;
-import android.util.Log;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.util.List;
+import com.backendless.Backendless;
+import com.backendless.BackendlessUser;
+
 /**
  * Created by kristinaneel on 2/1/2017.
  */
-public class Login extends AppCompatActivity {
+public class Login extends Activity {
     private TextView error;
     private TextView user;
     private TextView pass;
@@ -31,62 +31,47 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        error = (TextView) findViewById(R.id.errorText);
-        error.setAlpha(0.0f);
+        Backendless.initApp(this, "86BF87A5-8A92-A47F-FFD0-03212EB68600", "8D40F752-F203-3D0B-FF44-D02A66776400", appVersion);
 
-        sign = (Button) findViewById(R.id.signButton);
+        Button loginButton = (Button) findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(createLoginButtonListener());
+    }
 
+        public View.OnClickListener createLoginButtonListener()
+        {
+            return new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    EditText textID = (EditText) findViewById(R.id.textID);
+                    EditText passwordtxt = (EditText) findViewById(R.id.password);
 
-        sign.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                try {
-                    List<User> userList= new UserJsonReader(Login.this).getUserList();
-                    Log.v("userList", userList.toString());
+                    CharSequence ID = textID.getText();
+                    CharSequence password = passwordtxt.getText();
+                if (isLoginValuesValid(ID, password))
+                {
+                    LoadingCallback<BackendlessUser> loginCallBack = createLoginCallback();
 
-                    user = (TextView) findViewById(R.id.userNameText);
-
-
-
-                    Log.v("lookhere", user.getText().toString());
-
-                    if (user.getText().toString().equals("")){
-                        userStuff = null;
-                    }
-                    else {
-                        userStuff = Integer.parseInt(user.getText().toString());
-//                    }
-                        pass = (TextView) findViewById(R.id.passwordText2);
-                        passStuff = pass.getText().toString();
-                        Boolean isLoggedIn = false;
-                        Boolean isPassword = false;
-
-                        for (int i = 0; i < userList.size(); i++) {
-                            if (userStuff == (userList.get(i).getUserId())) {
-                                isLoggedIn = true;
-                                if (passStuff.matches(userList.get(i).getPassword())) {
-                                    isPassword = true;
-                                    Intent intent = new Intent(Login.this, MainActivity.class);
-                                    startActivity(intent);
-                                }
-                            }
-                        }
-                        if (!isLoggedIn | userStuff == null) {
-                            Toast.makeText(Login.this, "You did not enter a correct userID", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        if (!isPassword | passStuff == "") {
-                            Toast.makeText(Login.this, "You did not enter a correct password", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    loginCallBack.showLoading();
+                    loginUser(ID.toString(), password.toString(), loginCallBack);
                 }
 
             }
-        });
+        };
 
+    public boolean isLoginValuesValid(CharSequence ID, CharSequence password){
+        return AutoCompleteTextView.Validator.isIDValid(this, ID) && AutoCompleteTextView.Validator.isPasswordValid(this, password);
     }
-}
+
+
+    public LoadingCallback<BackendlessUser> createLoginCallback()
+    {
+        return new LoadingCallback<BackendlessUser>(this, getString(R.string.loading)){
+            @Override
+            public void handleResponse(BackendlessUser loggedInUser){
+                super.handleResponse(loggedInUser);
+                Toast makeText( LoginActivity.this, String.format( getString( R.string.logged_in ), loggedInUser.getObjectId() ), Toast.LENGTH_LONG ).show();
+            }
+        };
+    }

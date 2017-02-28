@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/userNameText"
+        android:id="@+id/textID"
         android:hint="UserName"
         android:textColor='#000000'
         android:background="#FFF"
@@ -38,9 +38,9 @@
         android:text="Sign In"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/signButton"
+        android:id="@+id/loginButton"
         android:layout_marginTop="74dp"
-        android:layout_below="@+id/passwordText2"
+        android:layout_below="@+id/password"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -48,14 +48,14 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/passwordText2"
+        android:id="@+id/password"
         android:hint="Password"
         android:textColor='#000000'
         android:background="#FFF"
         android:layout_marginTop="37dp"
-        android:layout_below="@+id/userNameText"
-        android:layout_alignLeft="@+id/userNameText"
-        android:layout_alignStart="@+id/userNameText" />
+        android:layout_below="@+id/textID"
+        android:layout_alignLeft="@+id/textID"
+        android:layout_alignStart="@+id/textID" />
 
 
 </RelativeLayout>
