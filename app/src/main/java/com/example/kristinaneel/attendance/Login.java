@@ -71,7 +71,7 @@ public class Login extends Activity {
             @Override
             public void handleResponse(BackendlessUser loggedInUser){
                 super.handleResponse(loggedInUser);
-                Toast makeText( LoginActivity.this, String.format( getString( R.string.logged_in ), loggedInUser.getObjectId() ), Toast.LENGTH_LONG ).show();
+                Toast makeText( Login.this, String.format( getString( R.string.logged_in ), loggedInUser.getObjectId() ), Toast.LENGTH_LONG ).show();
             }
         };
     }
