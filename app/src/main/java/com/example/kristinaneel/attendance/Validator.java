@@ -1,7 +1,6 @@
 package com.example.kristinaneel.attendance;
 
 import android.content.Context;
-import android.util.Patterns;
 import android.widget.Toast;
 
 /**
@@ -10,36 +9,15 @@ import android.widget.Toast;
 public class Validator
 {
 
-    public static boolean isNameValid(Context currentContext, CharSequence name )
+
+    public static boolean isIDValid( Context currentContext, CharSequence ID )
     {
-        if( name.toString().isEmpty() )
+        if( ID.toString().isEmpty() )
         {
-            Toast.makeText( currentContext, currentContext.getString( R.string.warning_name_empty ), Toast.LENGTH_LONG ).show();
+            Toast.makeText( currentContext, currentContext.getString( R.string.warning_ID_empty ), Toast.LENGTH_LONG ).show();
             return false;
         }
 
-        if( !Character.isUpperCase( name.charAt( 0 ) ) )
-        {
-            Toast.makeText( currentContext, currentContext.getString( R.string.warning_name_lowercase ), Toast.LENGTH_LONG ).show();
-            return false;
-        }
-
-        return true;
-    }
-
-    public static boolean isIDValid( Context currentContext, CharSequence email )
-    {
-        if( email.toString().isEmpty() )
-        {
-            Toast.makeText( currentContext, currentContext.getString( R.string.warning_email_empty ), Toast.LENGTH_LONG ).show();
-            return false;
-        }
-
-        if( !Patterns.EMAIL_ADDRESS.matcher( email ).matches() )
-        {
-            Toast.makeText( currentContext, currentContext.getString( R.string.warning_email_invalid ), Toast.LENGTH_LONG ).show();
-            return false;
-        }
 
         return true;
     }

@@ -4,7 +4,6 @@ package com.example.kristinaneel.attendance;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,6 +11,7 @@ import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
+import com.backendless.async.callback.AsyncCallback;
 
 /**
  * Created by kristinaneel on 2/1/2017.
@@ -31,47 +31,50 @@ public class Login extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        Backendless.initApp(this, "86BF87A5-8A92-A47F-FFD0-03212EB68600", "8D40F752-F203-3D0B-FF44-D02A66776400", appVersion);
+        Backendless.initApp(this, "86BF87A5-8A92-A47F-FFD0-03212EB68600", "8D40F752-F203-3D0B-FF44-D02A66776400","v1");
 
         Button loginButton = (Button) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(createLoginButtonListener());
     }
 
-        public View.OnClickListener createLoginButtonListener()
-        {
-            return new View.OnClickListener()
-            {
+
+    public void loginUser( String ID, String password, AsyncCallback<BackendlessUser> loginCallback )
+    {
+        Backendless.UserService.login( ID, password, loginCallback );
+    }
+
+        public View.OnClickListener createLoginButtonListener() {
+            return new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     EditText textID = (EditText) findViewById(R.id.textID);
                     EditText passwordtxt = (EditText) findViewById(R.id.password);
 
                     CharSequence ID = textID.getText();
                     CharSequence password = passwordtxt.getText();
-                if (isLoginValuesValid(ID, password))
-                {
-                    LoadingCallback<BackendlessUser> loginCallBack = createLoginCallback();
+                    if (isLoginValuesValid(ID, password)) {
+                        LoadingCallback<BackendlessUser> loginCallBack = createLoginCallback();
 
-                    loginCallBack.showLoading();
-                    loginUser(ID.toString(), password.toString(), loginCallBack);
+                        loginCallBack.showLoading();
+                        loginUser(ID.toString(), password.toString(), loginCallBack);
+                    }
+
                 }
+            };
+        }
 
-            }
-        };
-
-    public boolean isLoginValuesValid(CharSequence ID, CharSequence password){
-        return AutoCompleteTextView.Validator.isIDValid(this, ID) && AutoCompleteTextView.Validator.isPasswordValid(this, password);
+    public boolean isLoginValuesValid(CharSequence ID, CharSequence password) {
+        return Validator.isIDValid(this, ID) && Validator.isPasswordValid(this, password);
     }
 
 
-    public LoadingCallback<BackendlessUser> createLoginCallback()
-    {
-        return new LoadingCallback<BackendlessUser>(this, getString(R.string.loading)){
+    public LoadingCallback<BackendlessUser> createLoginCallback() {
+        return new LoadingCallback<BackendlessUser>(this, getString(R.string.loading)) {
             @Override
-            public void handleResponse(BackendlessUser loggedInUser){
+            public void handleResponse(BackendlessUser loggedInUser) {
                 super.handleResponse(loggedInUser);
-                Toast makeText( Login.this, String.format( getString( R.string.logged_in ), loggedInUser.getObjectId() ), Toast.LENGTH_LONG ).show();
+                Toast.makeText(Login.this, String.format("Logged in"), Toast.LENGTH_LONG).show();
             }
         };
     }
+}
