@@ -2,6 +2,7 @@ package com.example.kristinaneel.attendance;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -74,6 +75,8 @@ public class Login extends Activity {
             public void handleResponse(BackendlessUser loggedInUser) {
                 super.handleResponse(loggedInUser);
                 Toast.makeText(Login.this, String.format("Logged in"), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Login.this, MainActivity.class);
+                startActivity(intent);
             }
         };
     }

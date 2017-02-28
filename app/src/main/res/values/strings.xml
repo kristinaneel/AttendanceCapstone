@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Attendance</string>
     <string name="loading">Loading...</string>
-    <string name="logged_in">You're logged in</string>
+    <string name="logged_in">Logged in</string>
     <string name="loading_empty">Loading…</string>
     <string name="warning_name_empty">Name cannot be empty</string>
     <string name="warning_name_lowercase">Name should start from an uppercase letter</string>
