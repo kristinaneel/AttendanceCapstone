@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -18,12 +19,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
+
         String appVersion = "v1";
 
 
         Backendless.initApp(this, "86BF87A5-8A92-A47F-FFD0-03212EB68600", "8D40F752-F203-3D0B-FF44-D02A66776400", "v1");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        //actionBar.setHomeButtonEnabled(true);
+        //actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setIcon(R.mipmap.ic_launcher);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Take Attendance"));
@@ -66,19 +77,19 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
+
+
+    //    public void open(View v){
+//        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+//        alertDialog.setMessage("Attendance has been recorded for this event!");
+//        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "EXIT", new DialogInterface.OnClickListener(){
+//            public void onClick(DialogInterface dialog,int which){
+//                dialog.dismiss();
+//            }
+//        });
 //
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
+//        alertDialog.show();
 //    }
+
+
 }
